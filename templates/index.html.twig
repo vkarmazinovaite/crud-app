@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+    <header>
+        <h2 class="text-center">Projects list</h2>
+    </header>
+    <section id="projects" class="bg-light py-1">
+
+        <div class="container">
+            <div class="items">
+                {% if projects is not empty %}
+                    {% for project in projects %}
+                        <div class="item">
+                            <a href="{{ path('view_project', {'id': project.id}) }}" class="project-link">{{ project.title }}</a>
+                            <a href="{{ path('delete_project', {'id': project.id}) }}" class="delete" onclick="return confirm('Are you sure?')">X</a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="item">
+                    {{ form_start(form) }}
+                    <div>
+                        <div class="form-line">
+                            {{ form_label(form.title) }}
+                            {{ form_widget(form.title) }}
+                        </div>
+                        <div class="form-error">
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-line">
+                        {{ form_label(form.groups) }}
+                        {{ form_widget(form.groups) }}
+                        </div>
+                        <div class="form-error">
+                            {{ form_errors(form.groups) }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-line">
+                        {{ form_label(form.studentsPerGroup) }}
+                        {{ form_widget(form.studentsPerGroup) }}
+                        </div>
+                        <div class="form-error">
+                            {{ form_errors(form.studentsPerGroup) }}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div>
+
+    </div>
+{% endblock %}

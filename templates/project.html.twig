@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Project{% endblock %}
+
+{% block content %}
+    <header>
+            <h2 class="text-center">Status page</h2>
+    </header>
+    <section id="project" class="bg-light py-1">
+        <div class="container">
+            <a href="{{ path('index') }}" class="btn fl-right">Back to project's list</a>
+            Project title: <strong>{{ project.title }}</strong><br>
+            Number of groups: {{ project.groups|length }}<br>
+            Students per group: {{ project.studentsPerGroup }}<br>
+        </div>
+    </section>
+
+    <section id="students" class="py-1">
+        <div class="container">
+            <h3 class="text-center">Students</h3>
+                {% if project.students %}
+                    <div class="list">
+                        <div class="row captions">
+                            <div class="cell">Full name</div>
+                            <div class="cell">Group</div>
+                            <div class="cell">Action</div>
+                        </div>
+                        {% for student in project.students %}
+                            <div class="row">
+                                <div class="cell">{{ student.name }} {{ student.surname }}</div>
+                                <div class="cell">
+                                    {% if student.getStudentGroup is not null %}
+                                        {{ student.getStudentGroup.title }}
+                                    {% else %} - {% endif %}
+                                </div>
+                                <div class="cell">
+                                    <a href="{{ path('project_delete_student', {'projectId': project.id, 'studentId': student.id}) }}" onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+{#            {{ form_start(form) }}#}
+{#            <div>#}
+{#                <div class="form-line">#}
+{#                    {{ form_label(form.name) }}#}
+{#                    {{ form_widget(form.name) }}#}
+{#                </div>#}
+{#                <div class="form-error">#}
+{#                    {{ form_errors(form.name) }}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div>#}
+{#                <div class="form-line">#}
+{#                    {{ form_label(form.surname) }}#}
+{#                    {{ form_widget(form.surname) }}#}
+{#                </div>#}
+{#                <div class="form-error">#}
+{#                    {{ form_errors(form.surname) }}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div>#}
+{#                <div class="form-line">#}
+{#                    {{ form_widget(form.project, {'attr': {'hidden': 'true'}}) }}#}
+{#                </div>#}
+{#            </div>#}
+{#            {{ form_end(form) }}#}
+
+
+            <div class="items">
+                <div class="item">
+                    {{ form_start(form) }}
+                    <div>
+                        <div class="form-line">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div class="form-error">
+                            {{ form_errors(form.name) }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-line">
+                            {{ form_label(form.surname) }}
+                            {{ form_widget(form.surname) }}
+                        </div>
+                        <div class="form-error">
+                            {{ form_errors(form.surname) }}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="groups" class="py-1">
+        <div class="container">
+            <h3 class="text-center">Groups</h3>
+            <div class="items">
+            {% for element in groupings %}
+            <div class="item">
+            <div class="list">
+                <div class="row">
+                    <div class="cell">
+                        <h4>{{ element.group.title }}</h4>
+                    </div>
+                </div>
+
+
+                {% for assignedStudent in element.assigned %}
+                <div class="row">
+                    <div class="cell">
+                        {{ assignedStudent.name }} {{ assignedStudent.surname }} &nbsp;
+                        <a href="{{ path('remove_from_group', {'studentId': assignedStudent.id}) }}" onclick="return confirm('Are you sure?')">X</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if element.addMore > 0 %}
+                    {% for i in 1..element.addMore %}
+                        <div class="row">
+                            <div class="cell">
+                                <form method="post" action="{{ path('group_add_student') }}">
+                                    <input type="hidden" name="group" value="{{ element.group.id }}">
+                                    <select name="student" onchange="this.form.submit()">
+                                        <option value="">Assign student</option>
+                                        {% for student in unassignedStudents %}
+                                            <option value="{{ student.id }}">{{ student.name }} {{ student.surname }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
