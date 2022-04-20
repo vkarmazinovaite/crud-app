@@ -43,33 +43,6 @@
                     </div>
                 {% endif %}
 
-{#            {{ form_start(form) }}#}
-{#            <div>#}
-{#                <div class="form-line">#}
-{#                    {{ form_label(form.name) }}#}
-{#                    {{ form_widget(form.name) }}#}
-{#                </div>#}
-{#                <div class="form-error">#}
-{#                    {{ form_errors(form.name) }}#}
-{#                </div>#}
-{#            </div>#}
-{#            <div>#}
-{#                <div class="form-line">#}
-{#                    {{ form_label(form.surname) }}#}
-{#                    {{ form_widget(form.surname) }}#}
-{#                </div>#}
-{#                <div class="form-error">#}
-{#                    {{ form_errors(form.surname) }}#}
-{#                </div>#}
-{#            </div>#}
-{#            <div>#}
-{#                <div class="form-line">#}
-{#                    {{ form_widget(form.project, {'attr': {'hidden': 'true'}}) }}#}
-{#                </div>#}
-{#            </div>#}
-{#            {{ form_end(form) }}#}
-
-
             <div class="items">
                 <div class="item">
                     {{ form_start(form) }}
@@ -111,12 +84,11 @@
                     </div>
                 </div>
 
-
                 {% for assignedStudent in element.assigned %}
                 <div class="row">
                     <div class="cell">
                         {{ assignedStudent.name }} {{ assignedStudent.surname }} &nbsp;
-                        <a href="{{ path('remove_from_group', {'studentId': assignedStudent.id}) }}" onclick="return confirm('Are you sure?')">X</a>
+                        <a href="{{ path('remove_from_group', {'id': assignedStudent.id}) }}" onclick="return confirm('Are you sure?')">X</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -125,8 +97,7 @@
                     {% for i in 1..element.addMore %}
                         <div class="row">
                             <div class="cell">
-                                <form method="post" action="{{ path('group_add_student') }}">
-                                    <input type="hidden" name="group" value="{{ element.group.id }}">
+                                <form method="post" action="{{ path('group_add_student', {'id': element.group.id}) }}">
                                     <select name="student" onchange="this.form.submit()">
                                         <option value="">Assign student</option>
                                         {% for student in unassignedStudents %}

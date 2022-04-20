@@ -4,7 +4,6 @@ namespace App\Student;
 
 use App\Entity\Project;
 use App\Entity\Student;
-use App\Repository\ProjectRepository;
 use App\Repository\StudentRepository;
 
 class StudentManager
@@ -31,13 +30,11 @@ class StudentManager
     {
         $student->setProject($project);
 
-        //todo: catch unique student error
         $this->studentRepo->add($student);
     }
 
     public function deleteStudent(int $id): void
     {
-        //todo: if no student, catch and redirect with message
         $student = $this->studentRepo->findOneBy(['id' => $id]);
 
         if (!$student) {
@@ -50,5 +47,10 @@ class StudentManager
     public function getStudent(int $id): ?Student
     {
         return $this->studentRepo->findOneBy(['id' => $id]);
+    }
+
+    public function getUnassignedStudents(Project $project): array
+    {
+        return $this->studentRepo->findUnassignedStudents($project->getId());
     }
 }

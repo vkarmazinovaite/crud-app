@@ -5,7 +5,6 @@ namespace App\Project;
 use App\Entity\Group;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use App\Repository\StudentRepository;
 
 class ProjectManager
 {
@@ -13,15 +12,10 @@ class ProjectManager
      * @var ProjectRepository
      */
     private $projectRepo;
-    /**
-     * @var StudentRepository
-     */
-    private $studentRepo;
 
-    public function __construct(ProjectRepository $projectRepo, StudentRepository $studentRepo)
+    public function __construct(ProjectRepository $projectRepo)
     {
         $this->projectRepo = $projectRepo;
-        $this->studentRepo = $studentRepo;
     }
 
     public function createProject(Project $project, int $groupCount): void
@@ -35,13 +29,9 @@ class ProjectManager
         $this->projectRepo->add($project);
     }
 
-    public function deleteProject(int $id): void
+    public function deleteProject(Project $project): void
     {
-        $project = $this->projectRepo->findOneBy(['id' => $id]);
-
-        if ($project) {
-            $this->projectRepo->remove($project);
-        }
+        $this->projectRepo->remove($project);
     }
 
     public function getProject(int $id): ?Project
@@ -57,13 +47,11 @@ class ProjectManager
         return $this->projectRepo->findAll();
     }
 
-    public function getStudentGroups(int $projectId): array
+    public function getStudentGroups(Project $project): array
     {
-        $project = $this->projectRepo->findOneBy(['id' => $projectId]);
         $groups = $project->getGroups();
-
         $studentsPerGroup = $project->getStudentsPerGroup();
-        $unassignedStudents = $this->studentRepo->findUnassignedStudents($projectId);
+
         $groupings = array();
         $i = 0;
         foreach ($groups as $group) {
@@ -74,7 +62,7 @@ class ProjectManager
             $i++;
         }
 
-        return [$groupings, $unassignedStudents];
+        return $groupings;
     }
 }
 
