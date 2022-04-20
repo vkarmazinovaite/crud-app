@@ -189,3 +189,24 @@ h2 {
 #groups .list {
     padding: 1rem;
 }
+
+.flash-warning {
+    background: antiquewhite;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid orangered;
+}
+
+.flash-notice {
+    background: aliceblue;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid cadetblue;
+}
+
+.flash-success {
+    background: honeydew;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid green;
+}

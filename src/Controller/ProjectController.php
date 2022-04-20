@@ -81,7 +81,8 @@ class ProjectController extends AbstractController
             'action' => $this->generateUrl('create_student', ['id' => $project->getId()])
         ]);
 
-        [$groupings, $unassignedStudents] = $this->projectManager->getStudentGroups($project->getId());
+        $groupings = $this->projectManager->getStudentGroups($project);
+        $unassignedStudents = $this->studentManager->getUnassignedStudents($project);
 
         return $this->render('project.html.twig', [
             'project' => $project,
@@ -94,9 +95,9 @@ class ProjectController extends AbstractController
     /**
      * @Route("/project/{id}/delete", name="delete_project")
      */
-    public function deleteProject(int $id): Response
+    public function deleteProject(Project $project): Response
     {
-        $this->projectManager->deleteProject($id);
+        $this->projectManager->deleteProject($project);
 
         return $this->redirectToRoute('index');
     }
@@ -104,7 +105,7 @@ class ProjectController extends AbstractController
     /**
      * @Route("/student/create/{id}", name="create_student", methods={"POST"})
      */
-    public function createStudent(Request $request, Project $project) : Response
+    public function createStudent(Request $request, Project $project): Response
     {
         $student = new Student();
         $form = $this->createForm(StudentFormType::class, $student);
@@ -115,15 +116,16 @@ class ProjectController extends AbstractController
             try {
                 $this->studentManager->createStudent($student, $project);
             } catch (\Exception $exception) {
-                //todo: flash message
+                $this->addFlash('warning', 'Something wrong! Student was not saved!');
             }
             return $this->redirectToRoute('view_project', ['id' => $student->getProject()->getId()]);
         }
 
-        [$groupings, $unassignedStudents] = $this->projectManager->getStudentGroups($project->getId());
+        $groupings = $this->projectManager->getStudentGroups($project);
+        $unassignedStudents = $this->studentManager->getUnassignedStudents($project);
 
         return $this->renderForm('project.html.twig', [
-            'project' =>$this->projectManager->getProject($project->getId()),
+            'project' => $project,
             'form' => $form,
             'groupings' => $groupings,
             'unassignedStudents' => $unassignedStudents
@@ -144,7 +146,7 @@ class ProjectController extends AbstractController
         try {
             $this->studentManager->deleteStudent($studentId);
         } catch (\Exception $exception) {
-            //todo: flash message
+            $this->addFlash('warning', 'Something wrong! Student was not deleted!');
         }
 
         return $this->redirectToRoute('view_project', ['id' => $project->getId()]);

@@ -16,6 +16,17 @@
         {% endblock %}#}
     </head>
     <body>
+        {% block flash_messages %}
+            {% for label, messages in app.flashes %}
+                <div class="container">
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endblock %}
         {% block content %}{% endblock %}
         <script
                 src="https://code.jquery.com/jquery-3.3.1.min.js"
