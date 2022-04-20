@@ -8,6 +8,7 @@ use App\Form\ProjectFormType;
 use App\Form\StudentFormType;
 use App\Project\ProjectManager;
 use App\Student\StudentManager;
+use Doctrine\DBAL\Exception as DbalException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,8 +78,13 @@ class ProjectController extends AbstractController
         $student = new Student();
         $student->setProject($project);
 
+        /*
+         * switch actions when testing API
+         * also project.html.twig 48/49 lines
+         */
         $form = $this->createForm(StudentFormType::class, $student, [
-            'action' => $this->generateUrl('create_student', ['id' => $project->getId()])
+            //'action' => $this->generateUrl('create_student', ['id' => $project->getId()]),
+            'action' => $this->generateUrl('api_create_student', ['id' => $project->getId()]),
         ]);
 
         $groupings = $this->projectManager->getStudentGroups($project);
@@ -115,6 +121,8 @@ class ProjectController extends AbstractController
             $student = $form->getData();
             try {
                 $this->studentManager->createStudent($student, $project);
+            } catch (DbalException $exception) {
+                $this->addFlash('warning', 'Database error! Student was not saved!');
             } catch (\Exception $exception) {
                 $this->addFlash('warning', 'Something wrong! Student was not saved!');
             }

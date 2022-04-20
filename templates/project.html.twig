@@ -45,7 +45,8 @@
 
             <div class="items">
                 <div class="item">
-                    {{ form_start(form) }}
+                    {{ form_start(form, {'attr': {'id': 'postStudent'}}) }} {# Use this when testing API #}
+{#                  {{ form_start(form) }}#}  {# Use this when testing regular Controller #}
                     <div>
                         <div class="form-line">
                             {{ form_label(form.name) }}
