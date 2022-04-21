@@ -19,7 +19,7 @@ a single group. In case the group is full, information text should be visible to
 
 **Bonus requirements**
 1. Make information on the status page to automatically update every 10 seconds.
-2. Implement functional requirement #2 using RESTful API.
+2. Implement functional requirement #2 using RESTful API. :heavy_check_mark:
 3. Add automated test for functional requirement #4.
 
 
