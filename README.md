@@ -47,9 +47,10 @@ DB schema
 
 
 **Alternative implementation**
+
 The alternative solution was to add ManyToMany relation between Project and Student, that way the #2 functional requirement would be met, and the Student would be truly unique. 
 
-But #3 requirement still wouldn’t be correct for the project page (referring to the mockup page). Unless there is another student list, where you could see all students (assigned/not assigned/assigning to multiple projects) and add them, but that was not mentioned in the requirements. The same applies to students’ assigning to the Group.
+But #3 requirement still wouldn’t be correct for the project page (referring to the mockup page). Unless there would be another page for student management, where you could see all students, add them, assign them to one or multiple projects, remove student from projects, but that was not mentioned in the requirements.
 
 **API**
 
