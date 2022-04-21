@@ -24,6 +24,7 @@ a single group. In case the group is full, information text should be visible to
 
 
 **Implementation**
+
 Assuming, that teacher can add more than one project, the student list on the project page should not contain all students (this and other projects), but just those who belong to the project. 
 
 If we have Project A and Project B, and the StudentA is assigned to a Group#1 on Project A, we should not see that StudentA on Project B page. That would cause a confusion if Project B have also Group#1 and no students were assigned, but StudentA would have Group#1 next to it, and no indication it is from another project. 
