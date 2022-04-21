@@ -26,14 +26,4 @@ final class Version20220415150332 extends AbstractMigration
         $this->addSql('ALTER TABLE students ADD CONSTRAINT FK_A4698DB24DDF95DC FOREIGN KEY (student_group_id) REFERENCES `groups` (id)');
         $this->addSql('CREATE INDEX IDX_A4698DB24DDF95DC ON students (student_group_id)');
     }
-
-    public function down(Schema $schema): void
-    {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `students` DROP FOREIGN KEY FK_A4698DB24DDF95DC');
-        $this->addSql('DROP INDEX IDX_A4698DB24DDF95DC ON `students`');
-        $this->addSql('ALTER TABLE `students` CHANGE student_group_id in_group_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE `students` ADD CONSTRAINT FK_A4698DB2B9ADA51B FOREIGN KEY (in_group_id) REFERENCES groups (id)');
-        $this->addSql('CREATE INDEX IDX_A4698DB2B9ADA51B ON `students` (in_group_id)');
-    }
 }

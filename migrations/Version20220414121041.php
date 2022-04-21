@@ -27,15 +27,4 @@ final class Version20220414121041 extends AbstractMigration
         $this->addSql('ALTER TABLE `students` ADD CONSTRAINT FK_A4698DB2166D1F9C FOREIGN KEY (project_id) REFERENCES `projects` (id)');
         $this->addSql('ALTER TABLE `students` ADD CONSTRAINT FK_A4698DB2B9ADA51B FOREIGN KEY (in_group_id) REFERENCES `groups` (id)');
     }
-
-    public function down(Schema $schema): void
-    {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `students` DROP FOREIGN KEY FK_A4698DB2B9ADA51B');
-        $this->addSql('ALTER TABLE `groups` DROP FOREIGN KEY FK_F06D3970166D1F9C');
-        $this->addSql('ALTER TABLE `students` DROP FOREIGN KEY FK_A4698DB2166D1F9C');
-        $this->addSql('DROP TABLE `groups`');
-        $this->addSql('DROP TABLE `projects`');
-        $this->addSql('DROP TABLE `students`');
-    }
 }
