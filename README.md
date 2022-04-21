@@ -1,7 +1,7 @@
 # crud-app
 
 **Task**
-We need an application for a teacher to assign students to groups for a project.
+An application for a teacher to assign students to groups for a project.
 
 
 **Functional requirements**
