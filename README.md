@@ -33,10 +33,14 @@ As there was no mention of separate student management with adding a student tha
 
 Having all that in mind, the project page lists only students that are added to the project, also they have a unique name per project, meaning students with the same name (or same student) can be added to another project. Also, it was not clear if a Student can be assigned to one group on overall projects, or a Student can be added to one group per project. I chose the second option.
 
-Entity relations: 
+Entity relations:
+
 Project - OneToMany - Student
+
 Project - OneToMany - Group
+
 Group - OneToMany - Students
+
 
 DB schema
 ![Untitled](https://user-images.githubusercontent.com/8254886/164407908-42006385-b732-4c9a-97ca-983b65b23c2d.png)
