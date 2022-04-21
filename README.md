@@ -56,7 +56,7 @@ But #3 requirement still wouldn’t be correct for the project page (referring t
 
 "Add new student" form on project page was implemented using API.
 
-API also can be tested using Postman, sending POST method to url http://your-domain.loc/`api/student/{projectId}`
+API also can be tested using Postman, sending POST method to url `../api/student/{projectId}`
 Body should contain raw JSON:
 
 ```
